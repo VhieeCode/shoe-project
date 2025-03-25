@@ -1,9 +1,9 @@
-export interface Product {
-  id: string
-  name: string
-  price: number
-  stock: number
-  description?: string
-  image?: string
-}
-
+// Product type definition
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  stock: number;
+  description: string;
+};
