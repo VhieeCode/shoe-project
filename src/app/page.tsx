@@ -99,27 +99,10 @@ export default function ShoeStore() {
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0)
 
   // Checkout function that updates stock
-  const handleCheckout = async () => {
-    // Prepare updates for Supabase
-    const updates = cart.map((item) => ({
-      id: item.id,
-      stock: item.stock - item.quantity,
-    }))
-  
-    // Update stock in Supabase
-    const { error } = await supabase
-      .from("items")
-      .upsert(updates, { onConflict: ["id"] }) // Update stock where ID matches
-  
-    if (error) {
-      console.error("Error updating stock:", error.message)
-      alert("An error occurred while updating stock. Please try again.")
-      return
-    }
-  
-    // Update local state to reflect stock changes
-    setProducts((prevProducts) =>
-      prevProducts.map((product) => {
+  const handleCheckout = () => {
+    // Update product stock based on cart items
+    setProducts((prevProducts) => {
+      return prevProducts.map((product) => {
         const cartItem = cart.find((item) => item.id === product.id)
         if (cartItem) {
           return {
@@ -129,15 +112,14 @@ export default function ShoeStore() {
         }
         return product
       })
-    )
-  
-    // Clear the cart after successful checkout
-    clearCart()
-  
-    // Show success message
-    alert("Checkout complete! Stock has been updated in the database.")
+    })
+
+    // Clear the cart
+    setCart([])
+
+    // Show success message (you could use a toast here)
+    alert("Checkout complete! Stock has been updated.")
   }
-  
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
