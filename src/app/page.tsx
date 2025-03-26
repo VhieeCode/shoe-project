@@ -2,13 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  MinusCircle,
-  PlusCircle,
-  ShoppingCart,
-  Trash2,
-  Star,
-} from "lucide-react";
+import { MinusCircle, PlusCircle, ShoppingCart, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
