@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
+import { toast } from "sonner"
 
 import { supabase } from "@/utils/supabase/client"
 
@@ -118,14 +119,24 @@ export default function ShoeStore() {
     setCart([])
 
     // Show success message (you could use a toast here)
-    alert("Checkout complete! Stock has been updated.")
-  }
+    toast("Checkout Complete!", {
+      description: new Date().toLocaleString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }).replace(",", " |"),
+    })    
+    }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
+    <div className="container mx-auto py-8 px-4 max-w-7xl">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold">Footwear Emporium</h1>
-        <p className="text-muted-foreground">Find your perfect pair today</p>
+        <h1 className="text-3xl font-bold">Nike Shoes</h1>
+        <p className="text-muted-foreground">Just do it.</p>
       </header>
 
       <div className="flex flex-col lg:flex-row gap-8">
@@ -138,11 +149,11 @@ export default function ShoeStore() {
             </Badge>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {products.map((product) => (
               <Card
                 key={product.id}
-                className={`overflow-hidden cursor-pointer transition-all ${product.stock === 0 ? "opacity-60" : ""}`}
+                className={`overflow-hidden cursor-pointer transition-all transform hover:scale-105 hover:shadow-lg ${product.stock === 0 ? "opacity-60" : ""}`}
                 onClick={() => setSelectedProduct(product)}
               >
                 <div className="relative h-64 bg-muted">
@@ -203,7 +214,7 @@ export default function ShoeStore() {
                   <ScrollArea className="h-[calc(60vh-300px)] pr-4">
                     <div className="space-y-4">
                       {cart.map((item) => (
-                        <div key={item.id} className="flex gap-4">
+                        <div key={item.id} className="flex gap-3">
                           <div className="relative h-20 w-20 flex-shrink-0 rounded-md overflow-hidden bg-muted">
                             <Image
                               src={item.image || "/placeholder.svg"}
@@ -243,7 +254,7 @@ export default function ShoeStore() {
                               </Button>
                             </div>
                           </div>
-                          <div className="text-right font-medium">${(item.price * item.quantity).toFixed(2)}</div>
+                          <div className="text-right font-medium">₱{(item.price * item.quantity).toFixed(2)}</div>
                         </div>
                       ))}
                     </div>
@@ -328,7 +339,7 @@ export default function ShoeStore() {
                 <h3 className="font-medium">Description</h3>
                 <p>{selectedProduct.description}</p>
               </div>
-              <div className="mt-6 flex gap-4">
+              <div className="mt-6 flex gap-2">
                 <Button
                   className="flex-1"
                   onClick={() => {
