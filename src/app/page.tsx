@@ -57,7 +57,7 @@ export default function ShoeStore() {
       if (existingItem) {
         // Check if adding one more would exceed stock
         if (existingItem.quantity + 1 > product.stock) {
-          alert(`Sorry, only ${product.stock} items available in stock.`);
+          toast(`Sorry, only ${product.stock} items available in stock.`);
           return prevCart;
         }
 
@@ -72,7 +72,7 @@ export default function ShoeStore() {
         if (product.stock > 0) {
           return [...prevCart, { ...product, quantity: 1 }];
         } else {
-          alert("Sorry, this item is out of stock.");
+          toast("Sorry, this item is out of stock.");
           return prevCart;
         }
       }
@@ -95,7 +95,7 @@ export default function ShoeStore() {
           // Check if new quantity is valid
           if (newQuantity < 1) return item;
           if (product && newQuantity > product.stock) {
-            alert(`Sorry, only ${product.stock} items available in stock.`);
+            toast(`Sorry, only ${product.stock} items available in stock.`);
             return item;
           }
 
